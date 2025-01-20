@@ -35,6 +35,10 @@ class LocalStorageManager {
         return []
     }
     
+    /** updates what time notes have been added, removed or changed.
+     * Placed in localStorageManager so that it ensures that the time 
+     * gets updated right after the update occurs. 
+     */
     updateTime() {
         document.getElementById("timeNum").innerHTML = new Date().toLocaleTimeString()
     }
