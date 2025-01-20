@@ -5,7 +5,7 @@ class LocalStorageManager {
     /** stores note objects that look like {note : "abc123"} */
     static #noteObjArr = []
 
-    //will handle adding and removing notes from local storage
+    //updates local storage whenever there is a change made
     updateLocalStorage() {
         localStorage.setItem("allNotes", JSON.stringify(LocalStorageManager.#noteObjArr))
         this.updateTime()
