@@ -16,8 +16,8 @@ class LocalStorageManager {
         this.updateLocalStorage()
     }
 
-    updateNote(notesObj, index) {
-        LocalStorageManager.#noteObjArr.splice(index, 1, notesObj)
+    updateNote(noteDataObj, index) {
+        LocalStorageManager.#noteObjArr.splice(index, 1, noteDataObj)
         this.updateLocalStorage()
     }
 
@@ -37,5 +37,6 @@ class LocalStorageManager {
     
     updateTime() {
         document.getElementById("time").innerHTML = new Date().toLocaleTimeString()
+        // document.getElementById("time").insertAdjacentText("beforeend", new Date().toLocaleTimeString())
     }
 }

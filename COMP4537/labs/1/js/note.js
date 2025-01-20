@@ -3,26 +3,16 @@ class Note {
     //will create a text box that gets the note stored in local 
     //storage and populates the text box with that note
     
-    #key
+    // #key
     #textBox
     #removeBtn
     #noteDiv
-    
-    // constructor() {        
-    //     this.#key = ""
-    //     this.#textBox = document.createElement("input")
-    //     this.#removeBtn = document.createElement("button")
-
-    //     this.#removeBtn.addEventListener("click", () => {
-    //         this.remove()
-    //     })
-    // }
 
     /** 
      * notesObj: object structoreed as {note : "abc123"}
      */
-    constructor(notesObj = null, key) {
-        this.#key = key
+    constructor() {
+        // this.#key = key
         
         this.#textBox = document.createElement("input")
         this.#textBox.classList.add("noteBox")
@@ -38,9 +28,6 @@ class Note {
         this.#noteDiv.insertAdjacentElement("beforeend", this.#removeBtn)
         this.#noteDiv.insertAdjacentElement("beforeend", document.createElement("br"))
 
-        if (notesObj !== null) {
-            this.#textBox.value = notesObj.note
-        }
     }
 
     removeNoteDiv() {
@@ -51,12 +38,8 @@ class Note {
         return this.#noteDiv
     }
 
-    getNote() {
-        return this.#textBox
-    }
-
-    getKey() {
-        return this.#key
-    }
+    // getKey() {
+    //     return this.#key
+    // }
 
 }
