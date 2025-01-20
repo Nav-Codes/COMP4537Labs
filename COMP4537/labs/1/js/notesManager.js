@@ -84,7 +84,6 @@ class NotesManager {
     updateReader() {
         if (document.getElementById("readerDiv") !== null) {
             try {
-                // document.getElementById("readerDiv")
                 document.getElementById("notes").innerHTML = ""
                 this.loadNotes()
                 document.querySelectorAll(".noteDiv").forEach((currentElement, currentIndex, listObj) => {
