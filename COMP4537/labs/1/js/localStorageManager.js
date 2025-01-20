@@ -36,7 +36,6 @@ class LocalStorageManager {
     }
     
     updateTime() {
-        document.getElementById("time").innerHTML = new Date().toLocaleTimeString()
-        // document.getElementById("time").insertAdjacentText("beforeend", new Date().toLocaleTimeString())
+        document.getElementById("timeNum").innerHTML = new Date().toLocaleTimeString()
     }
 }
