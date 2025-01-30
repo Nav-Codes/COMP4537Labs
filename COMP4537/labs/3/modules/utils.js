@@ -9,7 +9,7 @@ exports.NameAndDatetime = class {
     }
 
     static getNameAndDate(name) {
-        return format.format(userMessages.nameAndDate, name, this.#getDate())
+        return format.format(userMessages.NAME_AND_DATE, name, this.#getDate())
     }
 }
 
