@@ -67,7 +67,6 @@ class Dictionary {
 
 class DictionaryRenderer {
     static renderWriteNewMeaning(dictionaryObj, word) {
-        console.log(dictionaryObj)
         switch (dictionaryObj.statusCode) {
             case 200: {
                 let success = successMsg

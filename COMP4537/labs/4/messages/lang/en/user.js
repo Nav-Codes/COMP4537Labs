@@ -1,6 +1,6 @@
 const getMeaningMsg = "Request #{reqNum}<br>Word: {word}<br>Definition: {meaning}"
-const improperFormatMsg = "Request #{reqNum}<br>Input was not formatted properly. Only non-empty alphabetical strings are allowed"
+const improperFormatMsg = "Request #{reqNum}<br>Input was not formatted properly. Only non-empty alphabetical string(s) are allowed"
 const wordNotFoundMsg = "Request #{reqNum}<br>The word \"{word}\" does not exist in this dictionary"
 const alreadyExistsMsg = "Request #{reqNum}<br>The word \"{word}\" already exists in this dictionary"
-const successMsg = "Request #{reqNum}<br>The word {word} was added successfully at {dateTime}<br>Number of words currently in dictionary: {numDict}"
+const successMsg = "Request #{reqNum}<br>The word {word} was added successfully on {dateTime}<br>Number of words currently in dictionary: {numDict}"
 const errorMsg = "Unexpected error. Error code: {errorCode}"
