@@ -32,9 +32,9 @@ class Dictionary {
             .then(data => {
                 dictionaryObj.data = data
             })
+            .catch(error => { })
 
-        console.log(dictionaryObj)
-        DictionaryRenderer.renderWriteNewMeaning(dictionaryObj)
+        DictionaryRenderer.renderWriteNewMeaning(dictionaryObj, word)
 
         document.getElementById("submitBtn").disabled = false
     }
@@ -57,12 +57,8 @@ class Dictionary {
             .then(data => {
                 dictionaryObj.data = data
             })
-            .catch(error => {
-                document.getElementById("submitBtn").disabled = false
-            })
+            .catch(error => { })
         DictionaryRenderer.renderMeaning(dictionaryObj)
-
-
 
         //after processing is done
         document.getElementById("submitBtn").disabled = false
@@ -70,16 +66,32 @@ class Dictionary {
 }
 
 class DictionaryRenderer {
-    static renderWriteNewMeaning(dictionaryObj) {
+    static renderWriteNewMeaning(dictionaryObj, word) {
         switch (dictionaryObj.statusCode) {
             case 200: {
+                let success = successMsg
 
+                success = success.replace("{reqNum}", dictionaryObj.data.requestNum)
+                success = success.replace("{word}", word)
+                success = success.replace("{dateTime}", dictionaryObj.data.date_string)
+                success = success.replace("{numDict}", dictionaryObj.data.size_of_dict)
+
+                document.getElementById("userMessage").innerHTML = success
             }
             case 400: {
+                if (dictionaryObj.data === undefined) {
+                    //poorly formatted
+                    let badFormat = improperFormatMsg
+                    badFormat = badFormat.replace("Request #{reqNum}<br>", "")
+                    document.getElementById("userMessage").innerHTML = badFormat
+                } else {
+                    //word already exists
+                    let alreadyExists = alreadyExistsMsg
+                    alreadyExists = alreadyExists.replace("{reqNum}", dictionaryObj.data.requestNum)
+                    alreadyExists = alreadyExists.replace("{word}", word)
 
-            }
-            case 404: {
-
+                    document.getElementById("userMessage").innerHTML = alreadyExists
+                }
             }
             default: {
 
@@ -100,20 +112,23 @@ class DictionaryRenderer {
                 break
             }
             case 400: {
-                document.getElementById("result").innerHTML = improperFormatMsg
+                let improperFormat = improperFormatMsg
+                improperFormat = improperFormat.replace("{reqNum}", dictionaryObj.data.num)
+                document.getElementById("result").innerHTML = improperFormat
                 break
             }
             case 404: {
-                let notFoundMsg = wordNotFound
+                let notFoundMsg = wordNotFoundMsg
+                notFoundMsg = userMsg.replace("{reqNum}", dictionaryObj.data.num)
                 notFoundMsg = notFoundMsg.replace("{word}", dictionaryObj.data.word)
                 document.getElementById("result").innerHTML = notFoundMsg
                 break
             }
             default: {
-
+                let error = errorMsg
+                error = userMsg.replace("{reqNum}", dictionaryObj.data.num)
+                error = error.replace("{errorCode}", dictionaryObj.statusCode)
             }
-
         }
-
     }
 }
