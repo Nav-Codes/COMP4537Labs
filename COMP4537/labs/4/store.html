@@ -6,15 +6,15 @@
 </head>
 
 <body>
-    <!-- onsubmit provided by ChatGPT -->
+    <!-- onsubmit provided by ChatGPT-->
     <form onsubmit="Dictionary.writeNewMeaning()">
         What word do you want to define?
         <br>
-        <input type="text" id="word" required>
+        <input type="text" id="word" required pattern="[A-Za-z]+">
         <br><br>
         What is this words definition?
         <br>
-        <input type="text" id="meaning" required>
+        <input type="text" id="meaning" required pattern="[A-Za-z ]+">
         <p></p>
         <button type="submit" id="submitBtn">Submit</button>
     </form>

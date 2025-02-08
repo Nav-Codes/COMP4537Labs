@@ -6,8 +6,8 @@ class Dictionary {
         event.preventDefault()
         document.getElementById("submitBtn").disabled = true
 
-        let word = document.getElementById("word").value
-        let meaning = document.getElementById("meaning").value
+        let word = document.getElementById("word").value.trim()
+        let meaning = document.getElementById("meaning").value.trim()
 
         let obj = {
             word: word,
@@ -67,6 +67,7 @@ class Dictionary {
 
 class DictionaryRenderer {
     static renderWriteNewMeaning(dictionaryObj, word) {
+        console.log(dictionaryObj)
         switch (dictionaryObj.statusCode) {
             case 200: {
                 let success = successMsg
@@ -77,6 +78,7 @@ class DictionaryRenderer {
                 success = success.replace("{numDict}", dictionaryObj.data.size_of_dict)
 
                 document.getElementById("userMessage").innerHTML = success
+                break
             }
             case 400: {
                 if (dictionaryObj.data === undefined) {
@@ -92,9 +94,10 @@ class DictionaryRenderer {
 
                     document.getElementById("userMessage").innerHTML = alreadyExists
                 }
+                break
             }
             default: {
-
+                DictionaryRenderer.#unknownError(dictionaryObj.statusCode)
             }
         }
     }
@@ -119,16 +122,21 @@ class DictionaryRenderer {
             }
             case 404: {
                 let notFoundMsg = wordNotFoundMsg
-                notFoundMsg = userMsg.replace("{reqNum}", dictionaryObj.data.num)
+                notFoundMsg = notFoundMsg.replace("{reqNum}", dictionaryObj.data.num)
                 notFoundMsg = notFoundMsg.replace("{word}", dictionaryObj.data.word)
                 document.getElementById("result").innerHTML = notFoundMsg
                 break
             }
             default: {
-                let error = errorMsg
-                error = userMsg.replace("{reqNum}", dictionaryObj.data.num)
-                error = error.replace("{errorCode}", dictionaryObj.statusCode)
+                DictionaryRenderer.#unknownError(dictionaryObj.statusCode)
             }
         }
+    }
+
+    static #unknownError(statusCode) {
+        let error = errorMsg
+        error = error.replace("{errorCode}", statusCode)
+
+        document.getElementById("result").innerHTML = error
     }
 }

@@ -3,4 +3,4 @@ const improperFormatMsg = "Request #{reqNum}<br>Input was not formatted properly
 const wordNotFoundMsg = "Request #{reqNum}<br>The word \"{word}\" does not exist in this dictionary"
 const alreadyExistsMsg = "Request #{reqNum}<br>The word \"{word}\" already exists in this dictionary"
 const successMsg = "Request #{reqNum}<br>The word {word} was added successfully at {dateTime}<br>Number of words currently in dictionary: {numDict}"
-const errorMsg = "Request #{reqNum}<br>Unexpected error. Error code: {errorCode}"
+const errorMsg = "Unexpected error. Error code: {errorCode}"

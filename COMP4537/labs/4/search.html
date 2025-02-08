@@ -9,7 +9,7 @@
     Enter the word you want the meaning to
      <!-- onsubmit provided by ChatGPT -->
     <form onsubmit="Dictionary.getMeaning()"> 
-        <input type="text" id="word" required>
+        <input type="text" id="word" required pattern="[A-Za-z]+">
         <button type="submit" id="submitBtn">Submit</button>
     </form>
     <br>
