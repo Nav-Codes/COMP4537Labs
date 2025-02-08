@@ -7,7 +7,7 @@
 
 <body>
     <!-- onsubmit provided by ChatGPT -->
-    <form onsubmit="writeNewMeaning()">
+    <form onsubmit="Dictionary.writeNewMeaning()">
         What word do you want to define?
         <br>
         <input type="text" id="word" required>
@@ -19,7 +19,7 @@
         <button type="submit" id="submitBtn">Submit</button>
     </form>
     <br>
-    <p id="userMessage"></p>
+    <div id="userMessage"></div>
     <script src="./messages/lang/en/user.js"></script>
     <script src="./js/index.js"></script>
 </body>
