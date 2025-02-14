@@ -3,8 +3,12 @@
     <head></head>
     <body>
         Enter SELECT or INSERT query only<br>
-        <input type="text" id="query"><br><br>
+        <input type="text" id="query">
+        <button onclick="DBQueryer.checkQuery()" id="queryButton">Go</button><br><br>
         Press the button below to insert sample data<br>
-        <button id="insertSample">Insert sample data</button>
+        <button onclick="DBQueryer.buttonClick()" id="sampleQueryButton">Insert sample data</button><br><br>
+        <div id="response"></div>
+        <script src="./messages/lang/en/user.js"></script>
+        <script src="./js/index.js"></script>
     </body>
 </html>
