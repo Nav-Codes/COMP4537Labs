@@ -4,10 +4,7 @@ class DBQueryer {
     static get #POST_FOR_INSERT() { return "https://king-prawn-app-7exk8.ondigitalocean.app/COMP4537/labs/5/api/v1/sql"; }
 
     static get #SAMPLE_INSERT_QUERIES() { return [
-        "INSERT INTO patient(name, dateOfBirth) VALUES('Sara Brown', '1990-01-01');",
-        "INSERT INTO patient(name, dateOfBirth) VALUES('John Smith', '1992-01-01');",
-        "INSERT INTO patient(name, dateOfBirth) VALUES('Jack Ma', '1992-01-01');",
-        "INSERT INTO patient(name, dateOfBirth) VALUES('Elon Musk', '1993-01-01');"
+        "INSERT INTO patient(name, dateOfBirth) VALUES('Sara Brown', '1901-01-01'), ('John Smith', '1941-01-01'), ('Jack Ma', '1961-01-30'), ('Elon Musk', '1999-01-01');"
     ]; }
 
     static #dbResObj = {};
@@ -29,7 +26,7 @@ class DBQueryer {
         } else {
             document.getElementById("response").innerHTML = invalidQueryMsg;
         }
-        DBQueryer.#dbResObj = {};
+        // DBQueryer.#dbResObj = {};
         document.getElementById("queryButton").disabled = false;
     }
 
