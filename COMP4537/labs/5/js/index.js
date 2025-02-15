@@ -7,7 +7,7 @@ class DBQueryer {
         "INSERT INTO patient(name, dateOfBirth) VALUES('Sara Brown', '1990-01-01');",
         "INSERT INTO patient(name, dateOfBirth) VALUES('John Smith', '1992-01-01');",
         "INSERT INTO patient(name, dateOfBirth) VALUES('Jack Ma', '1992-01-01');",
-        "INSERT INTO patient(name, dateOfBirth) VALUES('Elon Musk', '1993-01-01');",
+        "INSERT INTO patient(name, dateOfBirth) VALUES('Elon Musk', '1993-01-01');"
     ]; }
 
     static #dbResObj = {};
@@ -21,7 +21,11 @@ class DBQueryer {
         if (query.toLowerCase().includes("select") && !query.toLowerCase().includes("insert")) {
             DBQueryer.#selectQuery(query);
         } else if (!query.toLowerCase().includes("select") && query.toLowerCase().includes("insert")) {
-            DBQueryer.#insertQuery(query);
+            let queryArr = [];
+            query = query.replaceAll(`\\"`, `'`);
+            queryArr.push(query);
+            //might need to remove \" here because that might be causing the problem
+            DBQueryer.#insertQuery(queryArr);
         } else {
             document.getElementById("response").innerHTML = invalidQueryMsg;
         }
@@ -46,13 +50,18 @@ class DBQueryer {
         Renderer.renderGet(DBQueryer.#dbResObj);
     }
 
+    /** @param {Array} query should always be an array of strings */
     static async #insertQuery(query) {
+        //remove extra characters that may invalidate the query went sent to server
+        let stringifiedJSON = JSON.stringify({ sampleQueries: query });
+        stringifiedJSON = stringifiedJSON.replaceAll(`\\"`, `'`);
+        console.log(stringifiedJSON);
         await fetch(DBQueryer.#POST_FOR_INSERT, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ sampleQueries: [query] })
+            body: stringifiedJSON
         })
             .then(response => {
                 DBQueryer.#dbResObj.statusCode = response.status;
@@ -69,35 +78,12 @@ class DBQueryer {
 
     static async buttonClick() {
         DBQueryer.#dbResObj = {};
-        let queryString = "";
-        DBQueryer.#SAMPLE_INSERT_QUERIES.forEach(query => {
-            queryString = queryString.concat(query);
-        })
-        DBQueryer.#insertQuery(queryString);
-        // await fetch(DBQueryer.#POST_FOR_INSERT, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ sampleQueries: DBQueryer.#SAMPLE_INSERT_QUERIES })
-        // })
-        //     .then(response => {
-        //         DBQueryer.#dbResObj.statusCode = response.status
-        //         return response;
-        //     })
-        //     .then(data => {
-        //         DBQueryer.#dbResObj.data = data
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error: ', error);
-        //     });
-        // Renderer.renderPost()
+        DBQueryer.#insertQuery(DBQueryer.#SAMPLE_INSERT_QUERIES);
     }
 }
 
 class Renderer {
     static renderGet(dbResObj) {
-        // console.log(dbResObj);
         if (dbResObj.statusCode !== 200) {
             document.getElementById("response").innerHTML = `${dbResObj.data.error}. ${invalidQueryMsg}`;
             return;
@@ -126,8 +112,5 @@ class Renderer {
             return;
         }
         document.getElementById("response").innerHTML = dbResObj.data.message;
-
-        //for success, obj param is "message": "success"
-        //error is "error":"errorMsg"
     }
 }
