@@ -16,6 +16,7 @@ class DBQueryer {
 
         // Checks if the queries contain SELECT and INSERT to prevent chained queries of different types
         if (query.toLowerCase().includes("select") && !query.toLowerCase().includes("insert")) {
+            query = query.replaceAll(`\"`, `'`);
             DBQueryer.#selectQuery(query);
         } else if (!query.toLowerCase().includes("select") && query.toLowerCase().includes("insert")) {
             let queryArr = [];
