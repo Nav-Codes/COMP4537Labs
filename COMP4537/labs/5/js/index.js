@@ -80,9 +80,15 @@ class DBQueryer {
 }
 
 class Renderer {
+    static #checkStatusCode(statusCode) {
+        if (statusCode !== 200) {
+            document.getElementById("response").innerHTML = `${queryErrorMsg} ${invalidQueryMsg}`;
+            return true;
+        }
+    }
+
     static renderGet(dbResObj) {
-        if (dbResObj.statusCode !== 200) {
-            document.getElementById("response").innerHTML = `${dbResObj.data.error}. ${invalidQueryMsg}`;
+        if (Renderer.#checkStatusCode(dbResObj.statusCode)) {
             return;
         }
         let dbResArray = dbResObj.data;
@@ -103,10 +109,9 @@ class Renderer {
 
     //this is for the INSERT queries
     static renderPost(dbResObj) {
-        if (dbResObj.statusCode !== 200) {
-            document.getElementById("response").innerHTML = `${dbResObj.data.error}. ${invalidQueryMsg}`;
+        if (Renderer.#checkStatusCode(dbResObj.statusCode)) {
             return;
         }
-        document.getElementById("response").innerHTML = dbResObj.data.message;
+        document.getElementById("response").innerHTML = successfulQueryMsg;
     }
 }
