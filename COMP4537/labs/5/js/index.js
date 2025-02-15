@@ -9,7 +9,7 @@ class DBQueryer {
 
     static #dbResObj = {};
 
-    static checkQuery() {
+    static async checkQuery() {
         DBQueryer.#dbResObj = {};
         document.getElementById("queryButton").disabled = true;
         let query = document.getElementById("query").value;
@@ -17,11 +17,11 @@ class DBQueryer {
         // Checks if the queries contain SELECT and INSERT to prevent chained queries of different types and cleans query strings
         if (query.toLowerCase().includes("select") && !query.toLowerCase().includes("insert")) {
             query = query.replaceAll(`\"`, `'`);
-            DBQueryer.#selectQuery(query);
+            await DBQueryer.#selectQuery(query);
         } else if (!query.toLowerCase().includes("select") && query.toLowerCase().includes("insert")) {
             let queryArr = [];
             queryArr.push(query);
-            DBQueryer.#insertQuery(queryArr);
+            await DBQueryer.#insertQuery(queryArr);
         } else {
             document.getElementById("response").innerHTML = invalidQueryMsg;
         }
@@ -71,8 +71,10 @@ class DBQueryer {
     }
 
     static async buttonClick() {
+        document.getElementById("sampleQueryButton").disabled = true;
         DBQueryer.#dbResObj = {};
-        DBQueryer.#insertQuery(DBQueryer.#SAMPLE_INSERT_QUERIES);
+        await DBQueryer.#insertQuery(DBQueryer.#SAMPLE_INSERT_QUERIES);
+        document.getElementById("sampleQueryButton").disabled = false;
     }
 }
 
